@@ -57,7 +57,7 @@
                 <a class="nav-link" href="#">Right</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="#"> UPLOAD<i class="fa fa-upload mx-md-1" aria-hidden="true"></i></a>
+              <a class="nav-link" href="#"><button class=""><i class="fa fa-upload mx-md-1" aria-hidden="true"></i> UPLOAD</button></a>
               </li>
             </ul>
           </div>
