@@ -38,7 +38,7 @@
 			// 	$title = $row['title'];
 	?>
 
-	 	<div class="gallery-container">
+	  <div class="gallery-container">
       <div class="image">
       	<a href="image/1.jpg" data-lightbox="image-1">
 					<img src="image/1.jpg" data-lightbox="image-1">
