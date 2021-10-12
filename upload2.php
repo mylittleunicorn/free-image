@@ -1,8 +1,17 @@
-<?php
+<?php 
+	include "db/koneksi.php";
   session_start();
-  include "db/koneksi.php";
-?>
 
+	$nama_gambar = $_FILES['poto']['name'];
+	$tmp_gambar  = $_FILES['poto']['tmp_name'];
+	move_uploaded_file($tmp_gambar, 'image/'.$nama_gambar);
+
+  if (isset($_POST['upload'])) {
+  	
+  }
+ 
+  
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -92,69 +101,89 @@
         </div>
       </nav>
       <!-- NAV -->
-      <div class="jumbotron jumbotron-fluid" style="background-image: url('image/norris-niman-ABtmE3jhaPQ-unsplash.jpg');background-size: cover;padding-top: 30px; padding-bottom: 30px; height: auto;">
-        <div class="container d-flex justify-content-center">
-          <div class="col-md-6" style="text-align: center;">
-            <?php
-            $id_user = $_GET['iduser'];
-            $query_user = mysqli_query($koneksi,"SELECT * FROM tb_user where id_user='$id_user'");
-            while ($select_user = mysqli_fetch_array($query_user)) {
-            ?>
-            <img src="image/<?php echo $select_user['photo'] ?>" width="100" height="100" class="rounded-circle m-md-3">
-            <h3 class="display-4"><?php echo $select_user['username'] ?></h3>
+<div class="container">
+	<div class="row align-middle upload">
+		
+			<div class="col-md-6 d-flex justify-content-center">
+				<img src="image/<?php echo $nama_gambar ?>">
+			</div>
+			<div class="col-md-6 ">
+				<form action="upload_proses.php" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+				    <h3>Deskripsi</h3>
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Judul Gambar</label>
+				    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="judul">
+				     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $nama_gambar ?>" name="gambar">
+				     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $_SESSION['id_user'] ?>" name="user_id">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Kategori</label>
+				    <select class="form-control" id="exampleFormControlSelect1" name="kategori">
+				      <option value="hewan">Hewan</option>
+				      <option value="gunung">Gunung</option>
+				      <option value="laut">Laut</option>
+				      <option value="manusia">Manusia</option>
+				      <option value="teknologi">Teknologi</option>
+				    </select>
+				  </div>
+				  <div class="form-check">
+				  </div>
+				  <button type="submit" class="btn btn-warning" name="delete">Batalkan</button>
+				  <button type="submit" class="btn btn-success" name="upload">Posting</button>
+				</form>
+			</div>
+	
+	</div>
 
-            <p class="lead"><a href="profile_edit.php?iduser=<?php echo $select_user['id_user'] ?>"><button type="button" class="btn btn-primary">Edit Profile</button></a></p>
-            <?php 
-            }
-            ?>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-      	<div class="row">
-      	<div class="judul-kategori p-md-2">
-      		<h3>Gambar Terupload</h3>
-      		<hr>
-      	</div>
+	<div class="container">
 	      <div class="gallery-container">
-          <?php
-            $query_user_gamabar = mysqli_query($koneksi,"SELECT * FROM tb_gambar where user_id='$_SESSION[id_user]'");
-            while ($select_user_gambar = mysqli_fetch_array($query_user_gamabar)) {
-            ?>
-          <div class="image">
-            <a href="download.php?id=<?php echo $select_user_gambar['id_gambar'] ?>" data-lightbox="image-1">
-              <img src="image/<?php echo $select_user_gambar['gambar'] ?>" data-lightbox="image-1">
-            </a>
-          </div>
-          <div class="text">
-             <h5></h5>
-          </div>
-          <?php 
-          }
-          ?>
-	    	</div>
-	    	</div>
-    	</div>
-      
-    
-        
+	      <?php
 
-    <!-- Optional JavaScript; choose one of the two! -->  
-    
+			    $query  = "SELECT * FROM tb_gambar";
+			    $run = mysqli_query($koneksi,$query);  
+			    if(mysqli_num_rows($run) > 0){
+						while($row = mysqli_fetch_array($run)){
+							$id_gambar = $row['id_gambar'];
+							$image = $row['gambar'];
+							$title = $row['judul'];
+				?>
+	      
+	      <div class="image">
+	      	<a href="image/<?php echo $image ?>" data-lightbox="image-1">
+						<img src="image/<?php echo $image ?>" data-lightbox="image-1">
+					</a>
+	      </div>
+				<div class="text">
+					 <h5></h5>
+				</div>
+				<?php 
+					}
+				} 
+				?>
+	    </div>
+	  </div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+    tinymce.init({
+      selector: '#mytextarea'
+    });
 
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="jquery.flex-images.js"></script>
-    <script type="text/javascript">
-          $('.flex-images').flexImages({rowHeight: 100});
-        </script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    function triggerClick(e) {
+      document.querySelector('#profileImage').click();
+    }
+    function displayImage(e) {
+      if (e.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e){
+          document.querySelector('#profileDisplay').setAttribute('src', e.target.result);
+        }
+        reader.readAsDataURL(e.files[0]);
+      }
+    }
+  	</script>
+  	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    
-    
-  </body>
-</html>

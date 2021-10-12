@@ -1,4 +1,4 @@
-<?php
+<?php 
   session_start();
   include "db/koneksi.php";
 ?>
@@ -102,33 +102,35 @@
             ?>
             <img src="image/<?php echo $select_user['photo'] ?>" width="100" height="100" class="rounded-circle m-md-3">
             <h3 class="display-4"><?php echo $select_user['username'] ?></h3>
-
-            <p class="lead"><a href="profile_edit.php?iduser=<?php echo $select_user['id_user'] ?>"><button type="button" class="btn btn-primary">Edit Profile</button></a></p>
             <?php 
             }
             ?>
           </div>
         </div>
       </div>
+
+
       <div class="container">
       	<div class="row">
       	<div class="judul-kategori p-md-2">
       		<h3>Gambar Terupload</h3>
       		<hr>
       	</div>
+
+
 	      <div class="gallery-container">
           <?php
-            $query_user_gamabar = mysqli_query($koneksi,"SELECT * FROM tb_gambar where user_id='$_SESSION[id_user]'");
+            $query_user_gamabar = mysqli_query($koneksi,"SELECT * FROM tb_gambar where user_id='$id_user'");
             while ($select_user_gambar = mysqli_fetch_array($query_user_gamabar)) {
             ?>
-          <div class="image">
-            <a href="download.php?id=<?php echo $select_user_gambar['id_gambar'] ?>" data-lightbox="image-1">
-              <img src="image/<?php echo $select_user_gambar['gambar'] ?>" data-lightbox="image-1">
-            </a>
-          </div>
-          <div class="text">
-             <h5></h5>
-          </div>
+		      <div class="image">
+		      	<a href="download.php?id=<?php echo $select_user_gambar['id_gambar'] ?>" data-lightbox="image-1">
+							<img src="image/<?php echo $select_user_gambar['gambar'] ?>" data-lightbox="image-1">
+						</a>
+		      </div>
+					<div class="text">
+						 <h5></h5>
+					</div>
           <?php 
           }
           ?>

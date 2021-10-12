@@ -1,8 +1,8 @@
-<?php
+<?php 
   session_start();
   include "db/koneksi.php";
+  $kategori = $_GET['kategori'];
 ?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -92,33 +92,15 @@
         </div>
       </nav>
       <!-- NAV -->
-      <div class="jumbotron jumbotron-fluid" style="background-image: url('image/norris-niman-ABtmE3jhaPQ-unsplash.jpg');background-size: cover;padding-top: 30px; padding-bottom: 30px; height: auto;">
-        <div class="container d-flex justify-content-center">
-          <div class="col-md-6" style="text-align: center;">
-            <?php
-            $id_user = $_GET['iduser'];
-            $query_user = mysqli_query($koneksi,"SELECT * FROM tb_user where id_user='$id_user'");
-            while ($select_user = mysqli_fetch_array($query_user)) {
-            ?>
-            <img src="image/<?php echo $select_user['photo'] ?>" width="100" height="100" class="rounded-circle m-md-3">
-            <h3 class="display-4"><?php echo $select_user['username'] ?></h3>
-
-            <p class="lead"><a href="profile_edit.php?iduser=<?php echo $select_user['id_user'] ?>"><button type="button" class="btn btn-primary">Edit Profile</button></a></p>
-            <?php 
-            }
-            ?>
-          </div>
-        </div>
-      </div>
       <div class="container">
       	<div class="row">
       	<div class="judul-kategori p-md-2">
-      		<h3>Gambar Terupload</h3>
+      		<h3>Kategori image <?php echo $kategori ?></h3>
       		<hr>
       	</div>
 	      <div class="gallery-container">
-          <?php
-            $query_user_gamabar = mysqli_query($koneksi,"SELECT * FROM tb_gambar where user_id='$_SESSION[id_user]'");
+		     <?php
+            $query_user_gamabar = mysqli_query($koneksi,"SELECT * FROM tb_gambar where kategori='$kategori'");
             while ($select_user_gambar = mysqli_fetch_array($query_user_gamabar)) {
             ?>
           <div class="image">

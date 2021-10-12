@@ -1,8 +1,9 @@
 <?php
-  session_start();
   include "db/koneksi.php";
+  session_start();
+ 
+  
 ?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -92,69 +93,73 @@
         </div>
       </nav>
       <!-- NAV -->
-      <div class="jumbotron jumbotron-fluid" style="background-image: url('image/norris-niman-ABtmE3jhaPQ-unsplash.jpg');background-size: cover;padding-top: 30px; padding-bottom: 30px; height: auto;">
-        <div class="container d-flex justify-content-center">
-          <div class="col-md-6" style="text-align: center;">
-            <?php
-            $id_user = $_GET['iduser'];
-            $query_user = mysqli_query($koneksi,"SELECT * FROM tb_user where id_user='$id_user'");
-            while ($select_user = mysqli_fetch_array($query_user)) {
-            ?>
-            <img src="image/<?php echo $select_user['photo'] ?>" width="100" height="100" class="rounded-circle m-md-3">
-            <h3 class="display-4"><?php echo $select_user['username'] ?></h3>
+<div class="container">
+	<?php
+		$id = $_GET['id'];
+		$data = mysqli_query($koneksi,"SELECT id_gambar, gambar, judul, kategori, user_id, username, photo FROM tb_gambar LEFT JOIN tb_user ON tb_gambar.user_id = tb_user.id_user where id_gambar='$id'");
+          while ($a = mysqli_fetch_array($data)){
+	?>
+	<div class="row">
+		<div class="col-md-9 p-md-3">
+			<img src="image/<?php echo $a['gambar'] ?>" width="100%">
+		</div>
+		<div class="col-md-3 p-md-3 text-center">
+      <?php if (empty($a['photo'])): ?>
+        <img src="image/2.jpg" style="display: inline-block;width: 150px;height: 150px;border-radius: 50%;background-repeat: no-repeat;background-position: center center;background-size: cover;">
+      <?php else: ?>
+        <img src="image/<?php echo $a['photo'] ?>" style="display: inline-block;width: 150px;height: 150px;border-radius: 50%;background-repeat: no-repeat;background-position: center center;background-size: cover;">
+      <?php endif ?>
+			
+			<h4><a href="profile_user.php?iduser=<?php echo $a['user_id'] ?>"><?php echo $a['username'] ?></a></h4>
+			<a href="kategori.php?kategori=<?php echo $a['kategori'] ?>"><button type="button" class="btn btn-light mb-md-3" style="border: 1px solid #000; border-radius: 40%; padding: 6px 12px;border-radius: 50px!important" ><?php echo $a['kategori'] ?></button></a>
+			<a href="image/<?php echo $a['gambar'] ?>" download><button type="button" class="btn btn-info my-md-5" style="width:100%; border-radius: 50px!important">Unduh Gratis</button></a>
 
-            <p class="lead"><a href="profile_edit.php?iduser=<?php echo $select_user['id_user'] ?>"><button type="button" class="btn btn-primary">Edit Profile</button></a></p>
-            <?php 
-            }
-            ?>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-      	<div class="row">
-      	<div class="judul-kategori p-md-2">
-      		<h3>Gambar Terupload</h3>
-      		<hr>
-      	</div>
+		</div>
+	</div>
+	<?php 
+		}
+	?>
+<div class="container">
 	      <div class="gallery-container">
-          <?php
-            $query_user_gamabar = mysqli_query($koneksi,"SELECT * FROM tb_gambar where user_id='$_SESSION[id_user]'");
-            while ($select_user_gambar = mysqli_fetch_array($query_user_gamabar)) {
-            ?>
-          <div class="image">
-            <a href="download.php?id=<?php echo $select_user_gambar['id_gambar'] ?>" data-lightbox="image-1">
-              <img src="image/<?php echo $select_user_gambar['gambar'] ?>" data-lightbox="image-1">
-            </a>
-          </div>
-          <div class="text">
-             <h5></h5>
-          </div>
-          <?php 
-          }
-          ?>
-	    	</div>
-	    	</div>
-    	</div>
-      
-    
-        
+	      <?php
 
-    <!-- Optional JavaScript; choose one of the two! -->  
-    
-
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="jquery.flex-images.js"></script>
-    <script type="text/javascript">
-          $('.flex-images').flexImages({rowHeight: 100});
-        </script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    
+			    $query  = "SELECT * FROM tb_gambar";
+			    $run = mysqli_query($koneksi,$query);  
+			    if(mysqli_num_rows($run) > 0){
+						while($row = mysqli_fetch_array($run)){
+							$id_gambar = $row['id_gambar'];
+							$image = $row['gambar'];
+							$title = $row['judul'];
+				?>
+	      
+	      <div class="image">
+	      	<a href="download.php?id=<?php echo $id_gambar ?>" data-lightbox="image-1">
+						<img src="image/<?php echo $image ?>" data-lightbox="image-1">
+					</a>
+	      </div>
+				<div class="text">
+					 <h5></h5>
+				</div>
+				<?php 
+					}
+				} 
+				?>
+	    </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+    function triggerClick(e) {
+      document.querySelector('#profileImage').click();
+    }
+    function displayImage(e) {
+      if (e.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e){
+          document.querySelector('#profileDisplay').setAttribute('src', e.target.result);
+        }
+        reader.readAsDataURL(e.files[0]);
+      }
+    }
+  	</script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    
-    
-  </body>
-</html>

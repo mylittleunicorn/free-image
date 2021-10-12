@@ -1,3 +1,9 @@
+<?php
+  include "db/koneksi.php";
+  session_start();
+ 
+  
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -24,13 +30,13 @@
       <!-- NAV -->
       <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container">
-          <a class="navbar-brand" href="#">FREE IMAGE</a> 
+          <a class="navbar-brand" href="index.php">FREE IMAGE</a> 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
           <!-- Left nav -->
-          <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarSupportedContent">
+          <!-- <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
                 <a class="nav-link" href="#">Left</a>
@@ -48,19 +54,42 @@
                 <a class="nav-link" href="#">Link</a>
               </li>
             </ul>
-          </div>
+          </div> -->
 
           <!-- Right Nav -->
+          <?php if (isset($_SESSION['login'])): ?>
           <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">LOGIN</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <?php echo $_SESSION['user_name'] ?>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="profile.php?iduser=<?php echo $_SESSION['id_user'] ?>">Profil</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="signout.php">Keluar</a>
+                </div>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="#"><button class=""><i class="fa fa-upload mx-md-1" aria-hidden="true"></i> UPLOAD</button></a>
+              <a class="nav-link" href="upload.php"><button class=""><i class="fa fa-upload mx-md-1" aria-hidden="true"></i> UPLOAD</button></a>
               </li>
             </ul>
           </div>
+
+          <?php else: ?>
+          <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="signin.php">LOGIN</a>
+              </li>
+              <li class="nav-item">
+              <a href="signin.php" class="nav-link" href="#"><button class=""><i class="fa fa-upload mx-md-1" aria-hidden="true"></i> UPLOAD</button></a>
+              </li>
+            </ul>
+          </div>
+
+          <?php endif ?>
+          
         </div>
       </nav>
       <!-- NAV -->
@@ -98,328 +127,32 @@
         </div>
         </center>
       </div>
+      <div class="container">
+	      <div class="gallery-container">
+	      <?php
 
-      <div class="gallery-container">
-      <div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/2.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/3.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/4.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/5.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
-			<div class="image">
-      	<a href="image/1.jpg" data-lightbox="image-1">
-					<img src="image/1.jpg" data-lightbox="image-1">
-				</a>
-      </div>
-			<div class="text">
-				 <h5></h5>
-			</div>
+			    $query  = "SELECT * FROM tb_gambar";
+			    $run = mysqli_query($koneksi,$query);  
+			    if(mysqli_num_rows($run) > 0){
+						while($row = mysqli_fetch_array($run)){
+							$id_gambar = $row['id_gambar'];
+							$image = $row['gambar'];
+							$title = $row['judul'];
+				?>
+	      
+	      <div class="image">
+	      	<a href="download.php?id=<?php echo $id_gambar ?>" data-lightbox="image-1">
+						<img src="image/<?php echo $image ?>" data-lightbox="image-1">
+					</a>
+	      </div>
+				<div class="text">
+					 <h5></h5>
+				</div>
+				<?php 
+					}
+				} 
+				?>
+	    </div>
     </div>
       
     
@@ -436,11 +169,11 @@
         </script>
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    -->
+    
     
   </body>
 </html>
